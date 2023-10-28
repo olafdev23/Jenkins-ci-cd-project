@@ -17,7 +17,7 @@ pipeline{
         }
         stage ('Deploy to tomcat server') {
             steps{
-              deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://3.137.174.204:8080/')], contextPath: null, war: '**/*.war'
+              deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://3.137.174.204:8080/')], contextPath: null, war: '**/target/WebAppCal-0.0.6.war'
             }
         }
     }

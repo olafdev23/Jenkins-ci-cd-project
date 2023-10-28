@@ -11,7 +11,7 @@ pipeline{
             post {
                 success{
                     echo "Archiving the Artifacts"
-                    archiveArtifacts artifacts: '/target/WebAppCal-0.0.6.war"
+                    archiveArtifacts artifacts: '/target/WebAppCal-0.0.6.war'
                 }
             }
         }

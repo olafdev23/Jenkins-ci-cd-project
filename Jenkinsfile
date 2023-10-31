@@ -1,8 +1,6 @@
 pipeline{
     agent any
-    tools{
-        maven 'MAVEN_HOME'
-    }
+    
     stages{
         stage ('Build'){
             steps{
@@ -11,13 +9,13 @@ pipeline{
             post {
                 success{
                     echo "Archiving the Artifacts"
-                    archiveArtifacts artifacts: '*target/*.war'
+                    archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage ('Deploy') {
+        stage ('Deploy to tomcat server') {
             steps{
-              deploy adapters: [tomcat9(credentialsId: 'tomcat9', path: '', url: 'http://3.137.174.204:8080')], contextPath: null, onFailure: false, war: '*target/*WebAppCal-0.0.6.war'
+                deploy adapters: [tomcat9(credentialsId: 'apachcat', path: '', url: 'http://3.80.66.193:8080/')], contextPath: null, war: '**/*.war'
             }
         }
     }

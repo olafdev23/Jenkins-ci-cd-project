@@ -1,7 +1,7 @@
 pipeline{
     agent any
     tools{
-        def mavenHome = tool name: "Maven-3.9.5", type: "maven"
+        "Maven-3.9.5", type: "maven"
     }    
     stages{
         stage ('Build'){

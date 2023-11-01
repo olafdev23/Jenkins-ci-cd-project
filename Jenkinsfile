@@ -1,7 +1,8 @@
 pipeline{
     agent any
     tools{
-        maven 'local_maven'
+        def mavenHome = tool name: "Maven-3.9.5", type: "maven"
+        def mavenCMD = "$(mavenHome)/bin/mvm"
     }    
     stages{
         stage ('Build'){

@@ -1,24 +1,15 @@
-pipeline{
-    agent any
-    tools{
-      maven 'Maven-3.9.5'
-    }    
-    stages{
-        stage ('Build'){
-            steps{
-                sh 'mvn clean package'
-            }
-            post {
-                success{
-                    echo "Archiving the Artifacts"
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
-        stage ('Deploy to tomcat server') {
-            steps{
-                deploy adapters: [tomcat9(credentialsId: 'apachcat', path: '', url: 'http://3.80.66.193:8080/')], contextPath: null, war: '**/*.war'
-            }
+node {
+    
+    stage('clone Repo') {
+        git credentialsId: 'github', url: 'https://github.com/olafdev23/Jenkins-ci-cd-project.git'
+    }
+    
+    stage('Maven Build'){
+        sh 'mvn clean package'
+    }
+    stage('Deploy'){
+        sshagent(['Tomcat-Server-Agent']) {
+            sh 'scp -o StrictHostKeyChecking=no target/*.war ec2-user@3.91.202.71:/home/ec2-user/apache-tomcat-9.0.82/webapps'
         }
     }
 }
